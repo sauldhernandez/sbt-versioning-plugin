@@ -1,5 +1,7 @@
 # SBT Versioning Plugin
 
+[![Build Status](https://snap-ci.com/sauldhernandez/sbt-versioning-plugin/branch/master/build_image)](https://snap-ci.com/sauldhernandez/sbt-versioning-plugin/branch/master)
+
 ## Overview
 
 This plugin allows you to automatically configure the `version` setting of your project based on a semantic version and
