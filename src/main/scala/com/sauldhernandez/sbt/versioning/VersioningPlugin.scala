@@ -36,7 +36,10 @@ object VersioningPlugin extends AutoPlugin {
       val buildNumber = readValue(buildNumberSource.value).map(_.toInt)
       val isRelease = readValue(releaseSource.value).exists(_ == "true")
 
-      buildNumber.map(b => s"$base.$b").getOrElse(base) + (if(!isRelease) "-SNAPSHOT" else "")
+      if(isRelease)
+        buildNumber.map(b => s"$base-$b").getOrElse(base)
+      else
+        s"$base-SNAPSHOT"
     }
   )
 
