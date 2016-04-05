@@ -34,7 +34,7 @@ object VersioningPlugin extends AutoPlugin {
       val semVer = semanticVersion.value
       val base = s"${semVer.major}.${semVer.minor}.${semVer.patch}"
       val buildNumber = readValue(buildNumberSource.value).map(_.toInt)
-      val isRelease = readValue(releaseSource.value).exists(_ == "true")
+      val isRelease = readValue(releaseSource.value).isDefined
 
       if(isRelease)
         buildNumber.map(b => s"$base-$b").getOrElse(base)
