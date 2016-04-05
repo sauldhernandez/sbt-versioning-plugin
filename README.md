@@ -12,8 +12,7 @@ environment variables or java properties that indicate the build number and if t
 - Add the plugin in your `plugins.sbt`:
 
 ```
-resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots/"
-addSbtPlugin("com.sauldhernandez" % "sbt-versioning-plugin" % "1.0.0-SNAPSHOT")
+addSbtPlugin("com.sauldhernandez" % "sbt-versioning-plugin" % "1.0.0")
 ```
 
 - This plugin is an AutoPlugin, so you must add it to your project in `build.sbt`:
