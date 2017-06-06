@@ -12,7 +12,7 @@ environment variables or java properties that indicate the build number and if t
 - Add the plugin in your `plugins.sbt`:
 
 ```
-addSbtPlugin("com.sauldhernandez" % "sbt-versioning-plugin" % "1.0.0")
+addSbtPlugin("com.sauldhernandez" % "sbt-versioning-plugin" % "1.0.1")
 ```
 
 - This plugin is an AutoPlugin, so you must add it to your project in `build.sbt`:

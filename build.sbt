@@ -1,53 +1,37 @@
-
 name := "sbt-versioning-plugin"
 
 organization := "com.sauldhernandez"
 
-version := "1.0.0"
+version := "1.0.1"
 
 sbtPlugin := true
 
 scalaVersion in Global := "2.10.5"
 
-addSbtPlugin("com.eed3si9n" % "sbt-buildinfo" % "0.5.0")
+addSbtPlugin("com.eed3si9n" % "sbt-buildinfo" % "0.7.0")
 
-// Settings to build a nice looking plugin site
-site.settings
+bintrayRepository := "sbt-tooling"
 
-com.typesafe.sbt.SbtSite.SiteKeys.siteMappings <+= baseDirectory map { dir =>
-  val nojekyll = dir / "src" / "site" / ".nojekyll"
-  nojekyll -> ".nojekyll"
+lazy val credentialsFile = file("bintray.credentials")
+lazy val writeCredentials = TaskKey[Unit]("write-credentials")
+
+writeCredentials := {
+  val content =
+    s"""
+      |realm = Bintray API Realm
+      |host = api.bintray.com
+      |user = ${sys.env.getOrElse("BINTRAY_USERNAME", "")}
+      |password = ${sys.env.getOrElse("BINTRAY_PASSWORD", "")}
+    """.stripMargin
+
+  IO.write(credentialsFile, content)
 }
 
-site.sphinxSupport()
+bintrayEnsureCredentials := (bintrayEnsureCredentials dependsOn writeCredentials).value
 
-site.includeScaladoc()
-
-// enable github pages
-ghpages.settings
-
-git.remoteRepo := "git@github.com:sauldhernandez/sbt-versioning-plugin.git"
-
-// Scripted - sbt plugin tests
-scriptedSettings
-
-scriptedLaunchOpts <+= version apply { v => "-Dproject.version="+v }
-
-useGpg := true
-
-usePgpKeyHex("34de53dd")
+bintrayCredentialsFile := credentialsFile
 
 publishMavenStyle := true
-
-publishTo := {
-  val nexus = "https://oss.sonatype.org/"
-  if (isSnapshot.value)
-    Some("snapshots" at nexus + "content/repositories/snapshots")
-  else
-    Some("releases"  at nexus + "service/local/staging/deploy/maven2")
-}
-
-pomIncludeRepository := { _ => false }
 
 pomExtra := <url>https://github.com/sauldhernandez/sbt-versioning-plugin</url>
   <licenses>
@@ -68,3 +52,5 @@ pomExtra := <url>https://github.com/sauldhernandez/sbt-versioning-plugin</url>
       <url>http://github.com/sauldhernandez</url>
     </developer>
   </developers>
+
+licenses += ("MIT", url("http://opensource.org/licenses/MIT"))

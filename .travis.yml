@@ -1,0 +1,19 @@
+language: scala
+scala:
+- 2.10.5
+script:
+- sbt package
+after_success:
+deploy:
+-  provider: releases
+   api_key:
+     secure: jHhSiEwFugYgSZKobc3rJCT4kJ3lqnDfcUS17i7/G5i90MolXYlmQwo6QBeGERaCe7e1e8+gRxhHjuP/Au25KlqCaRRP1gwUeqSn/OpH1fu94W9Q8nyRn/iQSBhkRwqb4a8tpjhDXukFrskR8nPau4EwLYle+4UuBN5o617jciDImfifBCFTUHl7PsD9sve8zd2vAgmUgnhrsVhCWBtuZwAUqcyAjDDN9nvX8dVtYZPXFrFyDCi/zbsB1P4rbrMEcA4vkTtdzPAyTQFBzIF7tUyRMCyM6wgpPHfdoFgja3cbnrHEtkhlv7a7D1574xa0HnVjpJQuOv+vWoXMxcwWv3YEp8Gc4SnpOBHy+zzYd/01JGb8aWLAsyxpLa81ezRnm+TelxrxiR7nDoJpuTJha9qqeaNeBvrJX13uKE9CvrrFz/VYJfOVxbbUIy5hbZwnoE3O/scktp4ySoXaHBochAZv5yVlLqTU6RVq2wDSyA4KTzBM+7G0+Oy19qPgdrJ4gZdXPKhiS0r0XANIyNpqvpdsHvbnjMEUCHbpFXtToYI2hYMB1AQwbSqEp1VjwNRZYAsBOqGxmfxv8YyG3q+TL52YskKHsv36ZQ1ernzETcwSPrDJsya4Jw0lTm6JzRcO66dw6Og+yic8y0+w+AVJ/WCSuqeZU59JfKoxN6r5FdM=
+   file: target/scala-2.10/sbt-0.13/sbt-versioning-plugin-1.0.1.jar
+   on:
+     repo: sauldhernandez/sbt-versioning-plugin
+     branch: master
+-  provider: script
+   script: sbt publish
+   on:
+     repo: sauldhernandez/sbt-versioning-plugin
+     branch: master
